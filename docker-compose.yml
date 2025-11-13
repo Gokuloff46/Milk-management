@@ -1,0 +1,60 @@
+# Remove the 'version' line since it's obsolete
+services:
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./client:/app
+      - /app/node_modules
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    depends_on:
+      - server
+      - mongo
+
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./server:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+      - MONGODB_URI=mongodb://mongo:27017/milk_management
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/test-mongo"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    restart: unless-stopped
+    volumes:
+      - ./cloudflared/config.yml:/etc/cloudflared/config.yml:ro
+      - ./cloudflared/token.txt:/etc/cloudflared/token.txt:ro
+    command: tunnel --no-autoupdate --config /etc/cloudflared/config.yml run --token eyJhIjoiNWU3ZDkwYTRiNzQwNmI4MTExZmJkN2RkNDYwZTE0MWUiLCJ0IjoiZDY2ODQxY2UtMmJkMS00YWM3LThjMGUtMGM4YzdiMDkzYTk0IiwicyI6IkdHZTlSUjdqNTR1dGtiTXQwVUlWWU5xV1lSb2xZSkQ4ZFU2NzJMVTVac0k9In0=
+    networks:
+      - default
+
+volumes:
+  mongo_data:
+
+networks:
+  default:
+    driver: bridge

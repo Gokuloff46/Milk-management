@@ -1,0 +1,13 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Build Docker Images",
+			"type": "shell",
+			"command": "docker-compose -f \"d:\\Devops testing file and folders\\Milk\\test-phase-6\\docker-compose.yml\" build",
+			"args": [],
+			"isBackground": false,
+			"problemMatcher": []
+		}
+	]
+}

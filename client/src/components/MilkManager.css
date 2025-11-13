@@ -1,0 +1,480 @@
+/* Responsive milk bill card styles */
+.milk-bill-card {
+  max-width: 420px;
+  width: 100%;
+  margin: 0 auto 24px auto;
+  box-sizing: border-box;
+  overflow-x: auto;
+}
+.milk-card-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+.milk-card-table {
+  width: 100%;
+  min-width: 340px;
+  border-collapse: collapse;
+  font-size: 15px;
+}
+.milk-card-table th, .milk-card-table td {
+  padding: 8px 4px;
+  text-align: center;
+  border-bottom: 1px solid #eee;
+}
+.milk-card-table th {
+  background: #e3f2fd;
+  color: #1976d2;
+  font-weight: 600;
+}
+.milk-card-table tr:last-child td {
+  border-bottom: none;
+}
+.milk-card-total {
+  font-weight: bold;
+  margin-top: 8px;
+  color: #1976d2;
+}
+@media (max-width: 600px) {
+  .milk-bill-card {
+    max-width: 96vw;
+    width: 96vw;
+    min-width: 0;
+    margin: 8px auto 12px auto;
+    padding: 8px 2vw;
+    border-radius: 8px;
+    box-shadow: 0 1px 6px #eee;
+    box-sizing: border-box;
+    overflow-x: auto;
+  }
+  .milk-card-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    box-sizing: border-box;
+  }
+  .milk-card-table {
+    font-size: 13px;
+    min-width: 320px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .milk-card-table th, .milk-card-table td {
+    padding: 6px 2px;
+    box-sizing: border-box;
+  }
+}
+/* --- Mobile-first overrides for MilkManager --- */
+@media (max-width: 600px) {
+  .milk-card {
+    width: 99vw !important;
+    max-width: 99vw !important;
+    padding: 6px 2px 6px 2px !important;
+    border-radius: 7px !important;
+    font-size: 0.93rem !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    box-shadow: 0 1px 4px #e3e3e3 !important;
+  }
+  .milk-card-header, .milk-manager-section-title {
+    font-size: 0.97rem !important;
+    word-break: break-word;
+  }
+  .milk-card-table, .milk-manager-report-table {
+    width: 99vw !important;
+    max-width: 99vw !important;
+    font-size: 0.91rem !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    table-layout: fixed;
+    word-break: break-word;
+  }
+  .milk-card-table th, .milk-card-table td, .milk-manager-report-table th, .milk-manager-report-table td {
+    font-size: 0.91rem !important;
+    padding: 1px 2px !important;
+    word-break: break-word;
+  }
+  .milk-manager-filters select, .milk-manager-filters input[type="date"] {
+    font-size: 0.91rem !important;
+    min-width: 70px !important;
+    padding: 1px 2px !important;
+  }
+  .milk-card-actions {
+    gap: 2px !important;
+    flex-wrap: wrap !important;
+  }
+  .milk-card-actions button {
+    font-size: 0.88rem !important;
+    padding: 1px 4px !important;
+    margin-bottom: 2px !important;
+  }
+  .milk-manager-section {
+    padding: 6px 1px 4px 1px !important;
+    border-radius: 5px !important;
+  }
+}
+/* Hamburger menu button */
+.hamburger-menu-btn {
+  position: fixed;
+  top: 18px;
+  left: 18px;
+  background: #fff;
+  border: none;
+  border-radius: 50%;
+  box-shadow: 0 2px 8px #eee;
+  z-index: 1001;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+/* Side menu overlay */
+.side-menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.2);
+  z-index: 1000;
+}
+
+/* Side menu drawer */
+.side-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 70vw;
+  max-width: 320px;
+  height: 100vh;
+  background: #fff;
+  box-shadow: 2px 0 12px #eee;
+  z-index: 1002;
+  transform: translateX(-100%);
+  transition: transform 0.3s cubic-bezier(.4,0,.2,1);
+  display: flex;
+  flex-direction: column;
+  padding: 24px 0 0 0;
+}
+.side-menu.open {
+  transform: translateX(0);
+}
+.close-menu-btn {
+  background: none;
+  border: none;
+  align-self: flex-end;
+  margin: 0 18px 18px 0;
+  font-size: 2rem;
+  cursor: pointer;
+}
+.side-menu ul {
+  list-style: none;
+  padding: 0 24px;
+  margin: 0;
+}
+.side-menu-item {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  padding: 16px 0;
+  width: 100%;
+  text-align: left;
+  color: #222;
+  cursor: pointer;
+  border-bottom: 1px solid #eee;
+}
+.side-menu-item:last-child {
+  border-bottom: none;
+}
+/* Persistent Tab Menu Styles (matches VendorDashboard) */
+.vendor-tab-menu {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  background: #fff;
+  border-bottom: 1px solid #fda085;
+  padding: 0.75rem 0.5rem;
+  gap: 0.5rem;
+  position: relative;
+  z-index: 10;
+}
+
+/* Hide in-page tab menu when global top menu is present */
+body.has-top-menu .vendor-tab-menu { display: none !important; }
+.vendor-tab-item {
+  background: #fff;
+  color: #fda085;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  padding: 0.75rem 1.5rem;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(253,160,133,0.08);
+  transition: background 0.2s, color 0.2s;
+}
+.vendor-tab-item.active,
+.vendor-tab-item:hover {
+  background: #fda085;
+  color: #fff;
+}
+.vendor-tab-item.logout {
+  margin-left: auto;
+  background: #e53935;
+  color: #fff;
+}
+@media (max-width: 800px) {
+  .vendor-tab-menu {
+    flex-wrap: wrap;
+    gap: 0.25rem;
+    padding: 0.5rem 0.25rem;
+  }
+  .vendor-tab-item {
+    font-size: 0.95rem;
+    padding: 0.5rem 1rem;
+  }
+}
+/* MilkManager Mobile & Desktop Styles */
+.milk-manager-root {
+  width: 100vw;
+  max-width: 100vw;
+  margin: 0;
+  padding: 0;
+  background: #f7f7f7;
+  min-height: 100vh;
+}
+.milk-manager-title {
+  text-align: center;
+  font-size: 2rem;
+  margin: 1rem 0 0.5rem 0;
+  color: #43a047;
+}
+.milk-manager-switch {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+.milk-manager-card,
+.milk-manager-payment-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px #eee;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+.milk-manager-label {
+  font-weight: 600;
+  color: #333;
+}
+.milk-manager-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+.milk-manager-input,
+.milk-manager-select {
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: 1px solid #fda085;
+  font-size: 1rem;
+  min-width: 120px;
+}
+.milk-manager-input.readonly {
+  background: #eee;
+}
+.milk-manager-btn {
+  background: #43a047;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem 1.25rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.milk-manager-btn.export,
+.milk-manager-btn.report-export {
+  background: #fda085;
+}
+.milk-manager-btn.cancel {
+  background: #aaa;
+}
+.milk-manager-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  margin-bottom: 1rem;
+}
+.milk-manager-table {
+  width: 100%;
+  background: #fff;
+  border-collapse: collapse;
+  font-size: 1rem;
+}
+.milk-manager-table th,
+.milk-manager-table td {
+  padding: 0.5rem;
+  text-align: left;
+  border: 1px solid #eee;
+}
+.milk-manager-table-header {
+  background: #fda085;
+  color: #fff;
+}
+.milk-manager-table-row:nth-child(even) {
+  background: #fafafa;
+}
+.milk-manager-totals {
+  font-weight: 600;
+  margin-top: 1rem;
+  color: #1976d2;
+  text-align: center;
+}
+.milk-manager-payment-controls,
+.milk-manager-report-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+.milk-manager-payment-title,
+.milk-manager-report-title {
+  color: #fda085;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+.milk-manager-report-wrapper {
+  margin-top: 2rem;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px #eee;
+  padding: 1rem;
+}
+.milk-manager-report-totals {
+  font-weight: 600;
+  color: #1976d2;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+@media (max-width: 600px) {
+  .milk-manager-root {
+    padding: 0;
+    min-width: 100vw;
+  }
+  .milk-manager-card,
+  .milk-manager-payment-card,
+  .milk-manager-report-wrapper {
+    padding: 0.5rem;
+    border-radius: 8px;
+    box-shadow: none;
+    margin: 0.5rem auto;
+    width: 100vw;
+    max-width: 100vw;
+  }
+  .milk-manager-title {
+    font-size: 1.3rem;
+    margin: 0.5rem 0;
+  }
+  .milk-manager-form,
+  .milk-manager-payment-controls,
+  .milk-manager-report-controls {
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100vw;
+    max-width: 100vw;
+  }
+  .milk-manager-table-wrapper {
+    overflow-x: auto;
+    width: 100vw;
+    max-width: 100vw;
+  }
+  .milk-manager-table th,
+  .milk-manager-table td {
+    font-size: 0.9rem;
+    padding: 0.3rem;
+    min-width: 80px;
+  }
+}
+/* Responsive and modern UI improvements */
+@media (max-width: 700px) {
+  .milk-manager-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .milk-card, .milk-bill-card {
+    min-width: 0 !important;
+    width: 100% !important;
+    box-sizing: border-box;
+  }
+  .milk-manager-payment-controls {
+    flex-direction: column !important;
+    gap: 10px !important;
+    width: 100%;
+  }
+  .milk-manager-table {
+    font-size: 14px;
+    overflow-x: auto;
+    display: block;
+    width: 100%;
+  }
+  .milk-manager-table th, .milk-manager-table td {
+    padding: 6px 4px;
+  }
+  .milk-bill-card {
+    padding: 10px !important;
+  }
+}
+.milk-manager-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 18px;
+}
+.milk-card, .milk-bill-card {
+  margin: 0 auto 18px auto;
+  max-width: 600px;
+  box-shadow: 0 2px 8px #e3e3e3;
+}
+.milk-manager-payment-controls {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.milk-manager-table {
+  width: 100%;
+  border-radius: 8px;
+  background: #e3f2fd;
+  margin-top: 8px;
+  overflow-x: auto;
+}
+.milk-manager-table th {
+  background: #90caf9;
+  font-weight: bold;
+  padding: 8px;
+}
+.milk-manager-table td {
+  background: #fff;
+  padding: 8px;
+}
+.milk-bill-card {
+  border-radius: 12px;
+  background: #fff;
+  border: 1px solid #eee;
+  padding: 20px;
+}
+button {
+  cursor: pointer;
+  transition: background 0.2s;
+}
+button:active {
+  opacity: 0.85;
+}

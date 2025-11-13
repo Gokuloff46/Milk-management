@@ -1,0 +1,105 @@
+:root{
+  --accent-1: #fda085;
+  --accent-2: #f6d365;
+  --card-bg: #ffffff;
+  --muted: #8b9aa8;
+}
+
+.vendor-login-root {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(180deg, #e6f7ff 0%, #eaf6fb 60%);
+  padding: 24px;
+}
+
+.vendor-login-card {
+  background: var(--card-bg);
+  border-radius: 14px;
+  box-shadow: 0 8px 28px rgba(30, 60, 80, 0.08);
+  padding: 1.6rem 1.8rem;
+  max-width: 360px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.vendor-login-title {
+  font-size: 1.35rem;
+  font-weight: 800;
+  margin: 4px 0 6px 0;
+  color: #1976d2;
+  text-align: center;
+}
+.vendor-login-subtitle {
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.95rem;
+  margin-bottom: 14px;
+}
+
+.vendor-login-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.vendor-login-input {
+  padding: 0.9rem 1rem;
+  border-radius: 10px;
+  border: 1px solid #e6eef5;
+  font-size: 1rem;
+  outline: none;
+  transition: box-shadow 0.15s, border-color 0.15s;
+  background: #fbfdff;
+}
+.vendor-login-input:focus {
+  border-color: var(--accent-1);
+  box-shadow: 0 4px 18px rgba(253,160,133,0.12);
+}
+
+.vendor-login-btn {
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  border: none;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  display: block;
+  width: 100%;
+}
+.vendor-login-btn.primary {
+  background: linear-gradient(90deg, var(--accent-1) 0%, var(--accent-2) 100%);
+  box-shadow: 0 6px 18px rgba(253,160,133,0.14);
+}
+.vendor-login-btn.secondary {
+  margin-top: 8px;
+  background: linear-gradient(90deg, #fff 0%, #fff 100%);
+  color: var(--accent-1);
+  border: 1px solid rgba(253,160,133,0.14);
+  box-shadow: 0 4px 12px rgba(30,60,80,0.04);
+}
+.vendor-login-btn:active { transform: translateY(1px); }
+
+.vendor-login-error {
+  color: #e74c3c;
+  margin-top: 0.5rem;
+  text-align: center;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+@media (max-width: 520px) {
+  .vendor-login-card {
+    padding: 1rem 1rem;
+    max-width: 96vw;
+  }
+  .vendor-login-title { font-size: 1.15rem; }
+  .vendor-login-input { font-size: 0.98rem; padding: 0.85rem 0.95rem; }
+}

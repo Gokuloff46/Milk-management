@@ -1,0 +1,7 @@
+# local cloudflared token (should not be committed)
+cloudflared/token*.txt
+
+# Node/Docker common ignores
+node_modules/
+.env
+*.local

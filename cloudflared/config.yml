@@ -1,0 +1,8 @@
+tunnel: d66841ce-2bd1-4ac7-8c0e-0c8c7b093a94
+ingress:
+  - hostname: milk.kgr.life
+    service: http://client:3000
+  - hostname: apimilk.kgr.life
+    service: http://server:5000
+  - service: http_status:404
+loglevel: info

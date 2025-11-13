@@ -1,0 +1,106 @@
+/* DairyProductManager Mobile & Desktop Styles */
+.dairy-product-manager-root {
+  width: 100vw;
+  max-width: 100vw;
+  margin: 0 auto;
+  padding: 0;
+  background: #f7f7f7;
+  min-height: 100vh;
+}
+.dairy-product-manager-card {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px #eee;
+}
+.dairy-product-manager-title {
+  color: #fda085;
+  margin-bottom: 1rem;
+  text-align: center;
+  font-size: 2rem;
+}
+.dairy-product-manager-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  margin-bottom: 1.2rem;
+}
+.dairy-product-manager-input {
+  padding: 0.7rem 1rem;
+  border-radius: 8px;
+  border: 1px solid #fda085;
+  font-size: 1rem;
+  min-width: 120px;
+}
+.dairy-product-manager-btn {
+  background: #fda085;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.7rem 1.25rem;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.dairy-product-manager-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  margin-bottom: 1rem;
+}
+.dairy-product-manager-table {
+  width: 100%;
+  background: #fff;
+  border-collapse: collapse;
+  font-size: 1rem;
+}
+.dairy-product-manager-table th,
+.dairy-product-manager-table td {
+  padding: 0.5rem;
+  text-align: left;
+  border: 1px solid #eee;
+}
+.dairy-product-manager-table-header {
+  background: #fda085;
+  color: #fff;
+}
+.dairy-product-manager-table-row:nth-child(even) {
+  background: #fafafa;
+}
+@media (max-width: 600px) {
+  .dairy-product-manager-root {
+    padding: 0;
+    min-width: 100vw;
+  }
+  .dairy-product-manager-card {
+    padding: 0.5rem;
+    border-radius: 8px;
+    box-shadow: none;
+    margin: 0.5rem auto;
+    width: 100vw;
+    max-width: 100vw;
+  }
+  .dairy-product-manager-title {
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+  }
+  .dairy-product-manager-form {
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100vw;
+    max-width: 100vw;
+  }
+  .dairy-product-manager-table-wrapper {
+    overflow-x: auto;
+    width: 100vw;
+    max-width: 100vw;
+  }
+  .dairy-product-manager-table th,
+  .dairy-product-manager-table td {
+    font-size: 0.9rem;
+    padding: 0.3rem;
+    min-width: 80px;
+  }
+}

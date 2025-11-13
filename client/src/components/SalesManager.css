@@ -1,0 +1,430 @@
+/* Card container for sales table */
+/* Card container for sales table - responsive */
+.sales-card {
+  background: #e3f2fd;
+  border-radius: 18px;
+  box-shadow: 0 2px 12px rgba(58,123,213,0.08);
+  padding: 18px 10px;
+  margin: 0 auto 24px auto;
+  max-width: 480px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+@media (max-width: 600px) {
+  .sales-card {
+    max-width: 100vw;
+    width: 100vw;
+    border-radius: 0;
+    padding: 8px 0;
+    margin: 0;
+    box-shadow: none;
+  }
+  .sales-table-scroll {
+    width: 100vw;
+    max-width: 100vw;
+    overflow-x: auto;
+  }
+  .sales-table {
+    width: 100vw;
+    min-width: 600px;
+    border-radius: 0;
+    margin: 0;
+  }
+  .sales-table th,
+  .sales-table td {
+    padding: 8px 2px;
+    font-size: 13px;
+    min-width: 70px;
+  }
+  .sales-table tr {
+    height: 32px;
+  }
+}
+
+/* Scroll for table on small screens */
+.sales-table-scroll {
+  width: 100%;
+  overflow-x: auto;
+}
+/* Hamburger menu button */
+/* Modern, clean sales table styles */
+.sales-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin-top: 16px;
+  background: #fff;
+  box-shadow: 0 2px 12px #e0e0e0;
+  border-radius: 12px;
+  overflow: hidden;
+}
+/* Table cell and header improvements for mobile */
+.sales-table th, .sales-table td {
+  border-bottom: 1px solid #e0e0e0;
+  padding: 14px 6px;
+  text-align: center;
+  font-size: 14px;
+  max-width: 90px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.sales-table th {
+  background: linear-gradient(90deg, #aeefff 0%, #e3f2fd 100%);
+  color: #2196f3;
+  font-weight: 700;
+  border-bottom: 2px solid #90caf9;
+  font-size: 13px;
+  letter-spacing: 0.5px;
+}
+.sales-table th {
+  border-top-left-radius: 12px;
+}
+.sales-table th:last-child {
+  border-top-right-radius: 12px;
+}
+.sales-table tr:last-child td {
+  border-bottom: none;
+}
+.sales-table tr:nth-child(even) {
+  background: #f7fbff;
+}
+.sales-table tr:hover {
+  background: #e3f2fd;
+}
+/* Uniform, spaced buttons */
+.sales-edit-btn, .sales-delete-btn, .sales-print-btn {
+  background: #90caf9;
+  color: #fff;
+  border: none;
+  border-radius: 16px;
+  padding: 6px 14px;
+  margin: 4px 0;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 1px 4px #e0e0e0;
+  transition: background 0.2s, box-shadow 0.2s;
+  font-size: 13px;
+}
+.sales-table td {
+  vertical-align: middle;
+}
+.sales-edit-btn:hover {
+  background: #42a5f5;
+  box-shadow: 0 2px 8px #90caf9;
+}
+.sales-delete-btn:hover {
+  background: #ef5350;
+  box-shadow: 0 2px 8px #ef5350;
+}
+.sales-print-btn:hover {
+  background: #26a69a;
+  box-shadow: 0 2px 8px #26a69a;
+}
+/* Removed stray invalid padding line */
+.side-menu.open {
+  transform: translateX(0);
+}
+.close-menu-btn {
+  background: none;
+  border: none;
+  align-self: flex-end;
+  margin: 0 18px 18px 0;
+  font-size: 2rem;
+  cursor: pointer;
+}
+.side-menu ul {
+  list-style: none;
+  padding: 0 24px;
+  margin: 0;
+}
+.side-menu-item {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  padding: 16px 0;
+  width: 100%;
+  text-align: left;
+  color: #222;
+  cursor: pointer;
+  border-bottom: 1px solid #eee;
+}
+.side-menu-item:last-child {
+  border-bottom: none;
+}
+/* Menu Bar Styles */
+/* Persistent Tab Menu Styles (matches VendorDashboard) */
+.vendor-tab-menu {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  background: #fff;
+  border-bottom: 1px solid #fda085;
+  padding: 0.75rem 0.5rem;
+  gap: 0.5rem;
+  position: relative;
+  z-index: 10;
+}
+/* Hide in-page tab menu when global top menu is present */
+body.has-top-menu .vendor-tab-menu { display: none !important; }
+.vendor-tab-item {
+  background: #fff;
+  color: #fda085;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  padding: 0.75rem 1.5rem;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(253,160,133,0.08);
+  transition: background 0.2s, color 0.2s;
+}
+.vendor-tab-item.active,
+.vendor-tab-item:hover {
+  background: #fda085;
+  color: #fff;
+}
+.vendor-tab-item.logout {
+  margin-left: auto;
+  background: #e53935;
+  color: #fff;
+}
+@media (max-width: 800px) {
+  .vendor-tab-menu {
+    flex-wrap: wrap;
+    gap: 0.25rem;
+    padding: 0.5rem 0.25rem;
+  }
+  .vendor-tab-item {
+    font-size: 0.95rem;
+    padding: 0.5rem 1rem;
+  }
+}
+/* SalesManager Mobile & Desktop Styles */
+.sales-manager-root {
+  width: 100vw;
+  max-width: 100vw;
+  margin: 0 auto;
+  padding: 0;
+  background: #f7f7f7;
+  min-height: 100vh;
+}
+.sales-manager-card {
+  margin: 32px auto;
+  padding: 2rem;
+  max-width: 600px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px #eee;
+}
+.sales-manager-title {
+  color: #fda085;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  font-size: 2rem;
+}
+.sales-manager-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+/* Portrait mode for form on mobile */
+.sales-manager-form.sales-manager-form-portrait {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: stretch;
+  justify-content: flex-start;
+  margin-bottom: 16px;
+}
+.sales-manager-input,
+.sales-manager-select {
+  padding: 0.7rem 1rem;
+  border-radius: 8px;
+  border: 1px solid #fda085;
+  font-size: 1rem;
+  min-width: 120px;
+}
+.sales-manager-input.readonly {
+  background: #f5f5f5;
+}
+.sales-manager-btn {
+  background: #fda085;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.7rem 1.25rem;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.sales-manager-btn.export {
+  background: #43a047;
+}
+.sales-manager-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  margin-bottom: 1rem;
+}
+/* Hide table on mobile, use card list */
+.sales-manager-table-wrapper {
+  display: none;
+}
+/* Card list for sales */
+.sales-manager-cards-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.sales-manager-card-item {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  padding: 16px;
+  cursor: pointer;
+  transition: box-shadow 0.2s;
+}
+.sales-manager-card-item:hover {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+}
+.sales-manager-card-main {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.sales-manager-card-details {
+  margin-top: 12px;
+  background: #f0f8ff;
+  border-radius: 8px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.sales-manager-btn.delete {
+  background: #e53935;
+  color: #fff;
+  border: none;
+  margin-top: 4px;
+}
+.sales-manager-table {
+  width: 100%;
+  background: #fff;
+  border-collapse: collapse;
+  font-size: 1rem;
+}
+.sales-manager-table th,
+.sales-manager-table td {
+  padding: 0.5rem;
+  text-align: left;
+  border: 1px solid #eee;
+}
+.sales-manager-table-header {
+  background: #fda085;
+  color: #fff;
+}
+.sales-manager-table-row:nth-child(even) {
+  background: #fafafa;
+}
+.sales-manager-controls {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+.sales-manager-records-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+.sales-manager-error {
+  color: #e53935;
+  font-weight: 500;
+  margin-top: 0.5rem;
+}
+@media (max-width: 600px) {
+  .sales-manager-root {
+    padding: 0;
+    min-width: 100vw;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .sales-manager-card {
+    padding: 0.5rem;
+    border-radius: 8px;
+    box-shadow: none;
+    margin: 0.5rem auto;
+    width: 100vw;
+    max-width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .sales-manager-title {
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+    text-align: center;
+    width: 100vw;
+  }
+  .sales-manager-form,
+  .sales-manager-controls {
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100vw;
+    max-width: 100vw;
+    align-items: stretch;
+  }
+  .sales-manager-table-wrapper {
+    overflow-x: auto;
+    width: 100vw;
+    max-width: 100vw;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .sales-manager-table {
+    width: 100vw;
+    max-width: 100vw;
+    font-size: 0.95rem;
+    border-radius: 8px;
+    margin: 0 auto;
+    background: #fff;
+    box-shadow: 0 2px 8px #e3f2fd;
+    border: 1px solid #b3e5fc;
+  }
+  .sales-manager-table th,
+  .sales-manager-table td {
+    font-size: 0.95rem;
+    padding: 0.7rem 0.3rem;
+    min-width: 80px;
+    text-align: left;
+    border-bottom: 1px solid #e3f2fd;
+  }
+  .sales-manager-table-row:nth-child(even) {
+    background: #f5fcff;
+  }
+  .sales-manager-table-row {
+    height: 44px;
+  }
+  .sales-manager-btn {
+    min-width: 60px;
+    font-size: 14px;
+    padding: 8px 12px;
+    margin-bottom: 4px;
+  }
+  .sales-manager-table-row {
+    text-align: left;
+  }
+}

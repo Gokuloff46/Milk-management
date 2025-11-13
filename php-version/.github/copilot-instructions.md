@@ -1,0 +1,3 @@
+- Scaffolded Laravel + Docker workspace created by automated tooling.
+- Build steps: docker-compose up --build -d
+- App served on http://localhost:8000

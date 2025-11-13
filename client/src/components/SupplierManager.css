@@ -1,0 +1,225 @@
+/* Hamburger menu button */
+.hamburger-menu-btn {
+  position: fixed;
+  top: 18px;
+  left: 18px;
+  background: #fff;
+  border: none;
+  border-radius: 50%;
+  box-shadow: 0 2px 8px #eee;
+  z-index: 1001;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+/* Side menu overlay */
+.side-menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.2);
+  z-index: 1000;
+}
+
+/* Side menu drawer */
+.side-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 70vw;
+  max-width: 320px;
+  height: 100vh;
+  background: #fff;
+  box-shadow: 2px 0 12px #eee;
+  z-index: 1002;
+  transform: translateX(-100%);
+  transition: transform 0.3s cubic-bezier(.4,0,.2,1);
+  display: flex;
+  flex-direction: column;
+  padding: 24px 0 0 0;
+}
+.side-menu.open {
+  transform: translateX(0);
+}
+.close-menu-btn {
+  background: none;
+  border: none;
+  align-self: flex-end;
+  margin: 0 18px 18px 0;
+  font-size: 2rem;
+  cursor: pointer;
+}
+.side-menu ul {
+  list-style: none;
+  padding: 0 24px;
+  margin: 0;
+}
+.side-menu-item {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  padding: 16px 0;
+  width: 100%;
+  text-align: left;
+  color: #222;
+  cursor: pointer;
+  border-bottom: 1px solid #eee;
+}
+.side-menu-item:last-child {
+  border-bottom: none;
+}
+/* Menu Bar Styles */
+.supplier-manager-menu-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #43a047;
+  padding: 0.5rem 1rem;
+  position: relative;
+}
+.supplier-manager-menu-btn {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 2rem;
+  cursor: pointer;
+  margin-right: 1rem;
+}
+.supplier-manager-menu-icon {
+  display: inline-block;
+}
+.supplier-manager-menu-dropdown {
+  position: absolute;
+  top: 3.2rem;
+  left: 0;
+  background: #fff;
+  box-shadow: 0 2px 8px #ccc;
+  border-radius: 8px;
+  min-width: 180px;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+}
+.supplier-manager-menu-dropdown a {
+  padding: 0.75rem 1.25rem;
+  color: #43a047;
+  text-decoration: none;
+  font-weight: 600;
+  border-bottom: 1px solid #eee;
+  transition: background 0.2s;
+}
+.supplier-manager-menu-dropdown a:last-child {
+  border-bottom: none;
+}
+.supplier-manager-menu-dropdown a:hover {
+  background: #f7f7f7;
+}
+@media (max-width: 600px) {
+  .supplier-manager-menu-bar {
+    flex-direction: row;
+    padding: 0.5rem;
+  }
+  .supplier-manager-menu-btn {
+    font-size: 2rem;
+    margin-right: 0.5rem;
+  }
+  .supplier-manager-menu-dropdown {
+    top: 2.8rem;
+    min-width: 140px;
+  }
+  .supplier-manager-menu-dropdown a {
+    padding: 0.6rem 1rem;
+    font-size: 1rem;
+  }
+}
+/* SupplierManager Mobile & Desktop Styles */
+.supplier-manager-root {
+  width: 100vw;
+  max-width: 100vw;
+  margin: 0;
+  padding: 0;
+  background: #f7f7f7;
+  min-height: 100vh;
+}
+.supplier-manager-title {
+  text-align: center;
+  font-size: 2rem;
+  margin: 1rem 0 0.5rem 0;
+  color: #43a047;
+}
+.supplier-manager-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  justify-content: center;
+}
+.supplier-manager-input {
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: 1px solid #fda085;
+  font-size: 1rem;
+  min-width: 120px;
+}
+.supplier-manager-btn {
+  background: #43a047;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem 1.25rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.supplier-manager-btn.cancel {
+  background: #aaa;
+}
+.supplier-manager-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  margin-bottom: 1rem;
+}
+.supplier-manager-table {
+  width: 100%;
+  background: #fff;
+  border-collapse: collapse;
+  font-size: 1rem;
+}
+.supplier-manager-table th,
+.supplier-manager-table td {
+  padding: 0.5rem;
+  text-align: left;
+  border: 1px solid #eee;
+}
+.supplier-manager-table-header {
+  background: #fda085;
+  color: #fff;
+}
+.supplier-manager-table-row:nth-child(even) {
+  background: #fafafa;
+}
+@media (max-width: 600px) {
+  .supplier-manager-root {
+    padding: 0;
+    min-width: 100vw;
+  }
+  .supplier-manager-title {
+    font-size: 1.3rem;
+    margin: 0.5rem 0;
+  }
+  .supplier-manager-form {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .supplier-manager-table th,
+  .supplier-manager-table td {
+    font-size: 0.9rem;
+    padding: 0.3rem;
+  }
+}

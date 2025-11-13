@@ -1,0 +1,59 @@
+/* AdminAuth Mobile & Desktop Styles */
+.admin-auth-root {
+  max-width: 320px;
+  margin: 2.5rem auto;
+  padding: 1.5rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 2px 12px #eee;
+}
+.admin-auth-title {
+  text-align: center;
+  color: #43a047;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+}
+.admin-auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+.admin-auth-input {
+  padding: 0.7rem 1rem;
+  border-radius: 8px;
+  border: 1px solid #fda085;
+  font-size: 1rem;
+}
+.admin-auth-btn {
+  background: #fda085;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.7rem 1.25rem;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.admin-auth-error {
+  color: #e53935;
+  font-weight: 500;
+  margin-top: 0.5rem;
+  text-align: center;
+}
+@media (max-width: 600px) {
+  .admin-auth-root {
+    padding: 0.5rem;
+    border-radius: 8px;
+    box-shadow: none;
+    margin: 1rem auto;
+  }
+  .admin-auth-title {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+  }
+  .admin-auth-form {
+    gap: 0.5rem;
+  }
+}

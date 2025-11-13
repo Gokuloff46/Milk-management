@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Milk Management System</title>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <script>
+    if (typeof browser === 'undefined') {
+      window.browser = window;
+    }
+  </script>
+</head>
+<body>
+  <div id="root"></div>
+  <script src="/bundle.js"></script>
+  <script>
+    // Define 'global' as 'window' for compatibility with libraries expecting a global object
+    if (typeof global === 'undefined') {
+      var global = window;
+    }
+  </script>
+</body>
+</html>

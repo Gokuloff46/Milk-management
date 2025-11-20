@@ -80,6 +80,32 @@
   background: #ff6f61;
   margin-left: 1rem;
 }
+.customer-manager-btn.edit {
+  background: #2196f3;
+  margin-right: 0.5rem;
+}
+.customer-manager-btn.save {
+  background: #43a047;
+  margin-right: 0.5rem;
+}
+.customer-manager-btn.cancel {
+  background: #ff9800;
+}
+.customer-manager-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+.customer-manager-edit-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.customer-manager-edit-buttons {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
 @media (max-width: 600px) {
   .customer-manager-root {
     padding: 0;

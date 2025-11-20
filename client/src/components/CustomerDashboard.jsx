@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css';
 import './CustomerDashboard.css';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
@@ -263,7 +262,14 @@ export default function CustomerDashboard({ vendorId, customerId }) {
               const entriesForDate = entries.filter(e => {
                 const dVal = e.date || e.createdAt || null;
                 const d = dVal ? new Date(dVal) : null;
-                return d && d.toDateString() === date.toDateString();
+                console.log('[Calendar Debug] Entry date:', d);
+                return (
+                  d &&
+                  !isNaN(d) &&
+                  d.getFullYear() === date.getFullYear() &&
+                  d.getMonth() === date.getMonth() &&
+                  d.getDate() === date.getDate()
+                );
               });
               if (entriesForDate.length > 0) {
                 return (
@@ -285,7 +291,9 @@ export default function CustomerDashboard({ vendorId, customerId }) {
           onActiveStartDateChange={({ activeStartDate }) => {
             const correctedDate = new Date(activeStartDate);
             correctedDate.setHours(0, 0, 0, 0); // Ensure timezone alignment
+            console.log('[Calendar Debug] Active start date:', correctedDate);
             setSelectedDate(correctedDate);
+            setCalendarStartDate(correctedDate); // Explicitly set the calendar start date
           }}
         />
         <select
@@ -364,79 +372,6 @@ export default function CustomerDashboard({ vendorId, customerId }) {
       >
         Share Bill on WhatsApp
       </button>
-
-      <style>
-        {`
-          .calendar-style {
-            border: none;
-            border-radius: 8px;
-            background-color: #2c3e50; /* Dark background color */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            padding: 20px;
-            margin: 0 auto; /* Center the calendar */
-            max-width: 100%;
-            color: #ecf0f1; /* Light text color */
-          }
-
-          .react-calendar__navigation {
-            background-color: #34495e; /* Slightly lighter dark color for navigation */
-            color: #ecf0f1; /* Light text */
-            border-radius: 8px;
-            padding: 12px;
-            margin-bottom: 12px;
-            font-size: 18px; /* Adjusted font size for better visibility */
-            text-align: center;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Subtle shadow for better visibility */
-          }
-
-          .react-calendar__navigation button {
-            color: #ecf0f1; /* Light text */
-            background: none;
-            border: none;
-            font-size: 18px; /* Adjusted font size */
-            cursor: pointer;
-          }
-
-          .react-calendar__navigation button:disabled {
-            color: #7f8c8d; /* Disabled button color */
-          }
-
-          .react-calendar__navigation button:hover {
-            color: #f39c12; /* Highlight color on hover */
-          }
-
-          .react-calendar__month-view__days {
-            display: grid !important;
-            grid-template-columns: repeat(7, minmax(30px, 1fr)) !important; /* Ensures consistent width for all dates */
-            gap: 2px !important; /* Further reduced gap for better fit */
-            justify-items: center; /* Center items horizontally */
-            align-items: center; /* Center items vertically */
-            padding: 0 2px; /* Adjusted padding for proper fit */
-          }
-
-          .react-calendar__month-view__days__day {
-            color: #ecf0f1; /* Light text for better readability */
-            font-size: 10px; /* Further reduced font size for better fit */
-            border-radius: 4px; /* Slightly rounded corners */
-            transition: background-color 0.3s;
-            padding: 4px; /* Further reduced padding for better fit */
-            margin: 0;
-            text-align: center;
-            background: #34495e; /* Dark background for days */
-            box-sizing: border-box; /* Ensures consistent sizing */
-          }
-
-          .react-calendar__tile--active {
-            background: #f39c12; /* Highlight color for active tile */
-            color: #2c3e50; /* Dark text for contrast */
-            border-radius: 4px;
-          }
-
-          .react-calendar__tile:hover {
-            background: #1abc9c; /* Hover color */
-          }
-        `}
-      </style>
     </div>
   );
 }

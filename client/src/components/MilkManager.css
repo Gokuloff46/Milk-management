@@ -478,3 +478,64 @@ button {
 button:active {
   opacity: 0.85;
 }
+
+/* Print Styles - Hide everything except Payment Report */
+@media print {
+  * {
+    margin: 0;
+    padding: 0;
+  }
+  
+  body {
+    background: white;
+  }
+  
+  /* Hide all elements by default */
+  * {
+    display: none !important;
+  }
+  
+  /* Show only the Payment Report section */
+  .milk-manager-payment-report-container,
+  .milk-manager-payment-report-container * {
+    display: block !important;
+  }
+  
+  /* Style the report for printing */
+  .milk-manager-payment-report-container {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 20px;
+    page-break-inside: avoid;
+  }
+  
+  .milk-manager-payment-report-container h3 {
+    color: #1976d2;
+    margin-bottom: 20px;
+    font-size: 18px;
+    text-align: center;
+  }
+  
+  .milk-manager-payment-report-container table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  
+  .milk-manager-payment-report-container th,
+  .milk-manager-payment-report-container td {
+    border: 1px solid #333;
+    padding: 10px;
+    text-align: left;
+  }
+  
+  .milk-manager-payment-report-container th {
+    background: #f0f0f0;
+    font-weight: bold;
+  }
+  
+  .milk-manager-payment-report-container tr {
+    page-break-inside: avoid;
+  }
+}

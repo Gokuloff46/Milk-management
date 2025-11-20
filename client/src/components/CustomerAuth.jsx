@@ -28,13 +28,34 @@ export default function CustomerAuth({ onAuth }) {
     setFieldErrors({ mobile: mErr });
     if (mErr) return;
     try {
-      const res = await fetch(`${API}/send-otp`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ mobile: form.mobile }) });
+      console.log('Sending OTP for mobile:', form.mobile);
+      const res = await fetch(`${API}/send-otp`, { 
+        method: 'POST', 
+        headers: { 'Content-Type': 'application/json' }, 
+        body: JSON.stringify({ mobile: form.mobile }) 
+      });
+      
+      console.log('Response status:', res.status, 'ok:', res.ok);
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Failed to send OTP');
+      console.log('Full OTP Response:', JSON.stringify(data));
+      console.log('demoOtp value:', data.demoOtp);
+      
+      if (!res.ok) {
+        throw new Error(data.error || 'Failed to send OTP');
+      }
+      
       // Demo mode: show OTP returned by server
-      if (data.demoOtp) setDemoOtp(data.demoOtp);
-      // Stay in OTP mode and show verification input
+      if (data.demoOtp) {
+        console.log('✓ Demo OTP received:', data.demoOtp);
+        console.log('Setting demoOtp state to:', data.demoOtp);
+        setDemoOtp(data.demoOtp);
+        // Force alert for testing
+        alert('OTP Sent: ' + data.demoOtp);
+      } else {
+        console.warn('⚠ No demoOtp in response');
+      }
     } catch (err) {
+      console.error('OTP Error:', err);
       setError(err.message);
     }
   };
@@ -81,17 +102,70 @@ export default function CustomerAuth({ onAuth }) {
         <p className="vendor-login-subtitle">Use your mobile number to sign in</p>
 
         <div>
-          <div style={{ display: 'flex', gap: 8 }}>
-            <input name="mobile" placeholder="Mobile (10 digits)" value={form.mobile} onChange={e => { handleChange(e); setFieldErrors(f => ({ ...f, mobile: validateMobile(e.target.value) })); }} className="vendor-login-input" required />
-            <button className="vendor-login-btn primary" onClick={handleSendOtp}>Send OTP</button>
+          {/* Mobile Input and Send OTP Button */}
+          <div style={{ display: 'flex', gap: 8, marginBottom: 12 }}>
+            <input 
+              name="mobile" 
+              placeholder="Mobile (10 digits)" 
+              value={form.mobile} 
+              onChange={e => { handleChange(e); setFieldErrors(f => ({ ...f, mobile: validateMobile(e.target.value) })); }} 
+              className="vendor-login-input" 
+              required 
+            />
+            <button 
+              type="button"
+              className="vendor-login-btn primary" 
+              onClick={handleSendOtp}
+              style={{ padding: '8px 16px' }}
+            >
+              Send OTP
+            </button>
           </div>
           {fieldErrors.mobile && <div className="vendor-field-error">{fieldErrors.mobile}</div>}
-          <form onSubmit={handleVerifyOtp} className="vendor-login-form" style={{ marginTop: 8 }}>
-            <input name="otp" placeholder="Enter OTP" value={form.otp} onChange={e => { handleChange(e); setFieldErrors(f => ({ ...f, otp: '' })); }} className="vendor-login-input" required />
+          
+          {/* OTP Verification Form */}
+          <form onSubmit={handleVerifyOtp} className="vendor-login-form" style={{ marginTop: 12 }}>
+            <input 
+              name="otp" 
+              placeholder="Enter OTP" 
+              value={form.otp} 
+              onChange={e => { handleChange(e); setFieldErrors(f => ({ ...f, otp: '' })); }} 
+              className="vendor-login-input" 
+              required 
+            />
             {fieldErrors.otp && <div className="vendor-field-error">{fieldErrors.otp}</div>}
             <button type="submit" className="vendor-login-btn primary">Verify & Login</button>
           </form>
-          {demoOtp && <div style={{ marginTop: 8, color: '#1976d2' }}>Demo OTP: {demoOtp}</div>}
+          
+          {/* Demo OTP Display */}
+          {demoOtp && (
+            <div style={{ 
+              marginTop: 12, 
+              padding: 12, 
+              backgroundColor: '#e3f2fd', 
+              borderRadius: 8, 
+              color: '#1976d2',
+              fontWeight: 600,
+              textAlign: 'center',
+              border: '2px solid #1976d2'
+            }}>
+              ✓ Demo OTP: <span style={{fontSize: '1.2em'}}>{demoOtp}</span>
+            </div>
+          )}
+          
+          {error && (
+            <div style={{
+              marginTop: 12,
+              padding: 12,
+              backgroundColor: '#ffebee',
+              borderRadius: 8,
+              color: '#d32f2f',
+              fontWeight: 600,
+              textAlign: 'center'
+            }}>
+              Error: {error}
+            </div>
+          )}
         </div>
 
         <div style={{ display: 'flex', justifyContent: 'space-between', gap: 8, marginTop: 12 }}>

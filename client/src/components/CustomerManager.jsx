@@ -8,7 +8,9 @@ function getPeriodDates(period) {
   const now = new Date();
   let start, end;
   end = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
-  if (period === 'daily') {
+  if (period === 'all') {
+    start = new Date('2000-01-01'); // Show all records from year 2000
+  } else if (period === 'daily') {
     start = new Date(now.getFullYear(), now.getMonth(), now.getDate());
   } else if (period === 'weekly') {
     const day = now.getDay();
@@ -45,8 +47,10 @@ export default function CustomerManager({ vendor, vendorPeriod }) {
   const [form, setForm] = useState({ name: '', phone: '', address: '' });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [editingId, setEditingId] = useState(null);
+  const [editForm, setEditForm] = useState({ name: '', phone: '', address: '' });
   // allow parent to provide an initial period without colliding with local state
-  const [period, setPeriod] = useState(vendorPeriod || 'daily');
+  const [period, setPeriod] = useState(vendorPeriod || 'all');
 
   useEffect(() => {
     fetchCustomers();
@@ -97,6 +101,32 @@ export default function CustomerManager({ vendor, vendorPeriod }) {
     }
   }
 
+  function handleEdit(customer) {
+    setEditingId(customer._id);
+    setEditForm({ name: customer.name, phone: customer.phone, address: customer.address });
+  }
+
+  async function handleSave(id) {
+    try {
+      const res = await fetch(`${API}/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(editForm)
+      });
+      if (!res.ok) throw new Error('Failed to update customer');
+      setEditingId(null);
+      setEditForm({ name: '', phone: '', address: '' });
+      fetchCustomers();
+    } catch (err) {
+      setError(err.message);
+    }
+  }
+
+  function handleCancel() {
+    setEditingId(null);
+    setEditForm({ name: '', phone: '', address: '' });
+  }
+
   const { start, end } = getPeriodDates(period);
   const filteredCustomers = customers.filter(item => {
     if (!item.createdAt) return false;
@@ -125,6 +155,7 @@ export default function CustomerManager({ vendor, vendorPeriod }) {
         <div className="customer-manager-filter">
           <label>Filter by period:</label>
           <select value={period} onChange={e => setPeriod(e.target.value)} className="customer-manager-select">
+            <option value="all">All Customers</option>
             <option value="daily">Today</option>
             <option value="weekly">This Week</option>
             <option value="monthly">This Month</option>
@@ -134,8 +165,43 @@ export default function CustomerManager({ vendor, vendorPeriod }) {
         <ul id="customer-list" className="customer-manager-list">
           {filteredCustomers.map(c => (
             <li key={c._id} className="customer-manager-list-item">
-              <span><b>{c.name}</b> — {c.phone} — {c.address}</span>
-              <button onClick={() => handleDelete(c._id)} className="customer-manager-btn delete">Delete</button>
+              {editingId === c._id ? (
+                <div className="customer-manager-edit-form">
+                  <input
+                    type="text"
+                    className="customer-manager-input"
+                    value={editForm.name}
+                    onChange={e => setEditForm({ ...editForm, name: e.target.value })}
+                    placeholder="Name"
+                  />
+                  <input
+                    type="text"
+                    className="customer-manager-input"
+                    value={editForm.phone}
+                    onChange={e => setEditForm({ ...editForm, phone: e.target.value })}
+                    placeholder="Phone"
+                  />
+                  <input
+                    type="text"
+                    className="customer-manager-input"
+                    value={editForm.address}
+                    onChange={e => setEditForm({ ...editForm, address: e.target.value })}
+                    placeholder="Address"
+                  />
+                  <div className="customer-manager-edit-buttons">
+                    <button onClick={() => handleSave(c._id)} className="customer-manager-btn save">Save</button>
+                    <button onClick={handleCancel} className="customer-manager-btn cancel">Cancel</button>
+                  </div>
+                </div>
+              ) : (
+                <>
+                  <span><b>{c.name}</b> — {c.phone} — {c.address}</span>
+                  <div className="customer-manager-actions">
+                    <button onClick={() => handleEdit(c)} className="customer-manager-btn edit">Edit</button>
+                    <button onClick={() => handleDelete(c._id)} className="customer-manager-btn delete">Delete</button>
+                  </div>
+                </>
+              )}
             </li>
           ))}
         </ul>

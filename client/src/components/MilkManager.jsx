@@ -656,68 +656,152 @@ function generateBillPDF(customer, milkEntries, period, filterDate, filterSessio
             })()}
           </div>
           {/* Payment Report for All Customers */}
-          <div className="milk-card" style={{marginTop: 32, padding: 12, border: '2px solid #90caf9', borderRadius: 10, background: '#f7fbff', maxWidth: '99vw', overflowX: 'auto'}}>
+          <div className="milk-card milk-manager-payment-report-container" style={{marginTop: 32, padding: 12, border: '2px solid #90caf9', borderRadius: 10, background: '#f7fbff', maxWidth: '99vw', overflowX: 'auto'}}>
             <h3 style={{color: '#1976d2', marginBottom: 10, fontSize: 18, textAlign: 'center'}}>Payment Report (All Customers)</h3>
             <div className="milk-manager-payment-controls" style={{display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 10, justifyContent: 'center', alignItems: 'center'}}>
-              <input type="date" value={form.reportDate || form.date} onChange={e => setForm(f => ({ ...f, reportDate: e.target.value }))} style={{minWidth: 90, fontSize: 14, padding: 2}} />
-              <select value={form.reportPeriod || 'daily'} onChange={e => setForm(f => ({ ...f, reportPeriod: e.target.value }))} style={{minWidth: 90, fontSize: 14, padding: 2}}>
+              {/* Customer Selection */}
+              <select 
+                value={form.reportCustomer || 'all'} 
+                onChange={e => setForm(f => ({ ...f, reportCustomer: e.target.value }))} 
+                style={{minWidth: 120, fontSize: 14, padding: 6, borderRadius: 4, border: '1px solid #ccc'}}
+              >
+                <option value="all">All Customers</option>
+                {customers.map(c => (
+                  <option key={c._id} value={c._id}>{c.name}</option>
+                ))}
+              </select>
+              
+              <input 
+                type="date" 
+                value={form.reportDate || form.date} 
+                onChange={e => setForm(f => ({ ...f, reportDate: e.target.value }))} 
+                style={{minWidth: 120, fontSize: 14, padding: 6, borderRadius: 4, border: '1px solid #ccc'}} 
+              />
+              
+              <select 
+                value={form.reportPeriod || 'daily'} 
+                onChange={e => setForm(f => ({ ...f, reportPeriod: e.target.value }))} 
+                style={{minWidth: 110, fontSize: 14, padding: 6, borderRadius: 4, border: '1px solid #ccc'}}
+              >
                 <option value="daily">Daily</option>
                 <option value="weekly">Weekly</option>
                 <option value="monthly">Monthly</option>
               </select>
-              <select value={form.reportSession || 'all'} onChange={e => setForm(f => ({ ...f, reportSession: e.target.value }))} style={{minWidth: 90, fontSize: 14, padding: 2}}>
+              
+              <select 
+                value={form.reportSession || 'all'} 
+                onChange={e => setForm(f => ({ ...f, reportSession: e.target.value }))} 
+                style={{minWidth: 110, fontSize: 14, padding: 6, borderRadius: 4, border: '1px solid #ccc'}}
+              >
                 <option value="all">All Sessions</option>
                 <option value="morning">Morning</option>
                 <option value="evening">Evening</option>
               </select>
-              <button style={{background: '#2196f3', color: '#fff', border: 'none', borderRadius: 6, padding: '6px 14px', fontWeight: 'bold', fontSize: 14, marginLeft: 8}} onClick={() => {
-                import('jspdf').then(jsPDF => {
-                  const doc = new jsPDF.default({orientation: 'landscape'});
-                  let reportDate = form.reportDate || form.date;
-                  let reportSession = form.reportSession || 'all';
-                  let reportPeriod = form.reportPeriod || 'daily';
-                  let reportDateObj = new Date(reportDate);
-                  let filtered = milk.filter(item => {
-                    if (reportSession !== 'all' && item.session !== reportSession) return false;
-                    const entryDate = item.date ? item.date.split('T')[0] : '';
-                    const entryDateObj = new Date(entryDate);
-                    let dateMatch = false;
-                    if (reportPeriod === 'daily') {
-                      dateMatch = entryDate === reportDate;
-                    } else if (reportPeriod === 'weekly') {
-                      const day = reportDateObj.getDay();
-                      const weekStart = new Date(reportDateObj);
-                      weekStart.setDate(reportDateObj.getDate() - day);
-                      weekStart.setHours(0,0,0,0);
-                      const weekEnd = new Date(weekStart);
-                      weekEnd.setDate(weekStart.getDate() + 6);
-                      weekEnd.setHours(23,59,59,999);
-                      dateMatch = entryDateObj >= weekStart && entryDateObj <= weekEnd;
-                    } else if (reportPeriod === 'monthly') {
-                      // Ensure reportDateObj is a valid Date instance
-                      if (!(reportDateObj instanceof Date) || isNaN(reportDateObj)) {
-                        console.error('Invalid reportDateObj:', reportDateObj);
-                        dateMatch = false;
-                      } else {
-                        dateMatch = entryDateObj.getFullYear() === reportDateObj.getFullYear() && entryDateObj.getMonth() === reportDateObj.getMonth();
+              
+              {/* Print Button */}
+              <button 
+                style={{background: '#43a047', color: '#fff', border: 'none', borderRadius: 6, padding: '6px 14px', fontWeight: 'bold', fontSize: 14}}
+                onClick={() => {
+                  const printContainer = document.querySelector('.milk-manager-payment-report-container');
+                  if (!printContainer) {
+                    alert('Report container not found');
+                    return;
+                  }
+                  
+                  // Create a new window for printing
+                  const printWindow = window.open('', '', 'width=800,height=600');
+                  const printContent = printContainer.innerHTML;
+                  
+                  printWindow.document.write(`
+                    <html>
+                      <head>
+                        <title>Payment Report</title>
+                        <style>
+                          body { font-family: Arial, sans-serif; margin: 20px; }
+                          h3 { color: #1976d2; text-align: center; margin-bottom: 20px; }
+                          table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+                          th, td { border: 1px solid #333; padding: 10px; text-align: left; }
+                          th { background: #f0f0f0; font-weight: bold; }
+                          tr { page-break-inside: avoid; }
+                          @media print {
+                            body { margin: 10px; }
+                          }
+                        </style>
+                      </head>
+                      <body>
+                        ${printContent}
+                      </body>
+                    </html>
+                  `);
+                  printWindow.document.close();
+                  
+                  // Wait for content to load, then print
+                  setTimeout(() => {
+                    printWindow.print();
+                  }, 250);
+                }}
+              >
+                Print Report
+              </button>
+              
+              {/* Export Report Button */}
+              <button 
+                style={{background: '#2196f3', color: '#fff', border: 'none', borderRadius: 6, padding: '6px 14px', fontWeight: 'bold', fontSize: 14}} 
+                onClick={() => {
+                  import('jspdf').then(jsPDF => {
+                    const doc = new jsPDF.default({orientation: 'landscape'});
+                    let reportDate = form.reportDate || form.date;
+                    let reportSession = form.reportSession || 'all';
+                    let reportPeriod = form.reportPeriod || 'daily';
+                    let reportCustomer = form.reportCustomer || 'all';
+                    let reportDateObj = new Date(reportDate);
+                    let filtered = milk.filter(item => {
+                      if (reportSession !== 'all' && item.session !== reportSession) return false;
+                      if (reportCustomer !== 'all') {
+                        const itemCustomerId = typeof item.customer === 'object' ? item.customer._id : item.customer;
+                        if (itemCustomerId !== reportCustomer) return false;
                       }
-                    }
-                    return dateMatch;
+                      const entryDate = item.date ? item.date.split('T')[0] : '';
+                      const entryDateObj = new Date(entryDate);
+                      let dateMatch = false;
+                      if (reportPeriod === 'daily') {
+                        dateMatch = entryDate === reportDate;
+                      } else if (reportPeriod === 'weekly') {
+                        const day = reportDateObj.getDay();
+                        const weekStart = new Date(reportDateObj);
+                        weekStart.setDate(reportDateObj.getDate() - day);
+                        weekStart.setHours(0,0,0,0);
+                        const weekEnd = new Date(weekStart);
+                        weekEnd.setDate(weekStart.getDate() + 6);
+                        weekEnd.setHours(23,59,59,999);
+                        dateMatch = entryDateObj >= weekStart && entryDateObj <= weekEnd;
+                      } else if (reportPeriod === 'monthly') {
+                        if (!(reportDateObj instanceof Date) || isNaN(reportDateObj)) {
+                          console.error('Invalid reportDateObj:', reportDateObj);
+                          dateMatch = false;
+                        } else {
+                          dateMatch = entryDateObj.getFullYear() === reportDateObj.getFullYear() && entryDateObj.getMonth() === reportDateObj.getMonth();
+                        }
+                      }
+                      return dateMatch;
+                    });
+                    let html = `<h3>Payment Report (All Customers)</h3><table border='1' style='border-collapse:collapse;font-size:12px;'><thead><tr><th>Customer</th><th>Session</th><th>Liter</th><th>Price</th><th>Date</th><th>Status</th></tr></thead><tbody>`;
+                    html += filtered.map(item => `<tr><td>${typeof item.customer === 'object' ? item.customer.name : (customers.find(c => c._id === item.customer)?.name || item.customer)}</td><td>${item.session}</td><td>${item.liter}</td><td>₹${item.price}</td><td>${item.date ? item.date.split('T')[0] : ''}</td><td>${item.paymentStatus === 'paid' ? '✔️' : '❌'}</td></tr>`).join('');
+                    html += '</tbody></table>';
+                    const el = document.createElement('div');
+                    el.innerHTML = html;
+                    doc.html(el, {
+                      callback: function (doc) {
+                        doc.save('Payment-Report.pdf');
+                      },
+                      x: 10,
+                      y: 10
+                    });
                   });
-                  let html = `<h3>Payment Report (All Customers)</h3><table border='1' style='border-collapse:collapse;font-size:12px;'><thead><tr><th>Customer</th><th>Session</th><th>Liter</th><th>Price</th><th>Date</th><th>Status</th></tr></thead><tbody>`;
-                  html += filtered.map(item => `<tr><td>${typeof item.customer === 'object' ? item.customer.name : (customers.find(c => c._id === item.customer)?.name || item.customer)}</td><td>${item.session}</td><td>${item.liter}</td><td>₹${item.price}</td><td>${item.date ? item.date.split('T')[0] : ''}</td><td>${item.paymentStatus === 'paid' ? '✔️' : '❌'}</td></tr>`).join('');
-                  html += '</tbody></table>';
-                  const el = document.createElement('div');
-                  el.innerHTML = html;
-                  doc.html(el, {
-                    callback: function (doc) {
-                      doc.save('Payment-Report.pdf');
-                    },
-                    x: 10,
-                    y: 10
-                  });
-                });
-              }}>Export Report</button>
+                }}
+              >
+                Export PDF
+              </button>
             </div>
             <div style={{overflowX: 'auto'}}>
               <table className="milk-manager-table" style={{minWidth: 500}}>
@@ -737,9 +821,14 @@ function generateBillPDF(customer, milkEntries, period, filterDate, filterSessio
                     const reportDate = form.reportDate || form.date;
                     const reportSession = form.reportSession || 'all';
                     const reportPeriod = form.reportPeriod || 'daily';
+                    const reportCustomer = form.reportCustomer || 'all';
                     const reportDateObj = new Date(reportDate);
                     let filtered = milk.filter(item => {
                       if (reportSession !== 'all' && item.session !== reportSession) return false;
+                      if (reportCustomer !== 'all') {
+                        const itemCustomerId = typeof item.customer === 'object' ? item.customer._id : item.customer;
+                        if (itemCustomerId !== reportCustomer) return false;
+                      }
                       const entryDate = item.date ? item.date.split('T')[0] : '';
                       const entryDateObj = new Date(entryDate);
                       let dateMatch = false;
@@ -765,16 +854,36 @@ function generateBillPDF(customer, milkEntries, period, filterDate, filterSessio
                       }
                       return dateMatch;
                     });
-                    return filtered.map(item => (
-                      <tr key={item._id}>
-                        <td>{typeof item.customer === 'object' ? item.customer.name : customers.find(c => c._id === item.customer)?.name || item.customer}</td>
-                        <td>{item.session}</td>
-                        <td>{item.liter}</td>
-                        <td>₹{item.price}</td>
-                        <td>{item.date ? item.date.split('T')[0] : ''}</td>
-                        <td>{item.paymentStatus === 'paid' ? <span style={{color: 'green'}}>✔️</span> : <span style={{color: 'red'}}>❌</span>}</td>
-                      </tr>
-                    ));
+                    
+                    // Calculate totals
+                    const totalLiters = filtered.reduce((sum, item) => sum + Number(item.liter || 0), 0);
+                    const totalCost = filtered.reduce((sum, item) => sum + Number(item.price || 0), 0);
+                    const totalDays = new Set(filtered.map(item => item.date ? item.date.split('T')[0] : '')).size;
+                    
+                    return (
+                      <>
+                        {filtered.map(item => (
+                          <tr key={item._id}>
+                            <td>{typeof item.customer === 'object' ? item.customer.name : customers.find(c => c._id === item.customer)?.name || item.customer}</td>
+                            <td>{item.session}</td>
+                            <td>{item.liter}</td>
+                            <td>₹{item.price}</td>
+                            <td>{item.date ? item.date.split('T')[0] : ''}</td>
+                            <td>{item.paymentStatus === 'paid' ? <span style={{color: 'green'}}>✔️</span> : <span style={{color: 'red'}}>❌</span>}</td>
+                          </tr>
+                        ))}
+                        {/* Totals Row */}
+                        {filtered.length > 0 && (
+                          <tr style={{background: '#e8f5e9', fontWeight: 'bold', borderTop: '2px solid #2196f3'}}>
+                            <td colSpan="2" style={{textAlign: 'right', paddingRight: 12}}>Grand Total:</td>
+                            <td>{totalLiters.toFixed(2)} L</td>
+                            <td>₹{totalCost.toFixed(2)}</td>
+                            <td>{totalDays} day(s)</td>
+                            <td></td>
+                          </tr>
+                        )}
+                      </>
+                    );
                   })()}
                 </tbody>
               </table>

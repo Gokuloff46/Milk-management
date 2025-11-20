@@ -20,9 +20,10 @@ const __dirname = path.dirname(__filename);
 dotenv.config();
 
 const app = express();
-// Allow requests from localhost:3000 and deployed frontend
+// Allow requests from localhost, 127.0.0.1, and deployed frontend
 const allowedOrigins = [
   'http://localhost:3000',
+  'http://127.0.0.1:3000',
   'https://milk.kgr.life',
   'https://www.milk.kgr.life'
 ];
@@ -30,6 +31,12 @@ app.use(cors({
   origin: function (origin, callback) {
     // allow requests with no origin (like mobile apps, curl, etc.)
     if (!origin) return callback(null, true);
+    
+    // Allow any local IP address (192.168.x.x, 10.x.x.x, etc.)
+    if (origin.includes('localhost') || origin.includes('127.0.0.1') || /^http:\/\/\d+\.\d+\.\d+\.\d+:3000$/.test(origin)) {
+      return callback(null, true);
+    }
+    
     if (allowedOrigins.includes(origin)) {
       return callback(null, true);
     } else {
@@ -93,22 +100,12 @@ const PORT = process.env.PORT || 5000;
   }
 })();
 
-// Serve React app for all non-API routes
-
-app.use(express.static(path.join(__dirname, '../client/dist')));
-
+// Middleware for .mjs files
 app.use((req, res, next) => {
   if (req.url.endsWith('.mjs')) {
     res.setHeader('Content-Type', 'application/javascript');
   }
   next();
-});
-
-app.get('*', (req, res) => {
-  // Only handle non-API routes
-  if (!req.path.startsWith('/api')) {
-    res.sendFile(path.join(__dirname, '../client/dist/index.html'));
-  }
 });
 
 mongoose.connection.on('error', (err) => {

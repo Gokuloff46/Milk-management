@@ -27,6 +27,7 @@ services:
     environment:
       - NODE_ENV=development
       - MONGODB_URI=mongodb://mongo:27017/milk_management
+      - OTP_DEMO=true
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:5000/test-mongo"]
       interval: 10s
@@ -36,7 +37,7 @@ services:
       - mongo
 
   mongo:
-    image: mongo:latest
+    image: mongo:4.4
     ports:
       - "27017:27017"
     volumes:
